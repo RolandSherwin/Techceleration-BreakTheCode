@@ -3,6 +3,7 @@ use std::collections::BTreeMap;
 use tokio;
 mod api;
 use api::NearbyPlaces;
+use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
 use geoutils::Location;
 
 #[tokio::main]
@@ -93,16 +94,38 @@ fn print_sorted_by_distance(nearby: &NearbyPlaces, step_size: isize) {
         })
     }
 
-    println!("KM      No of places       Open now");
-    total_places
+    let zipped = total_places
         .into_iter()
         .zip(open_places.into_iter())
-        .for_each(|((km, total), (_, open))| {
+        .collect::<Vec<_>>();
+    let table = zipped
+        .iter()
+        .cloned()
+        .map(|((km, total), (_, open))| {
+            vec![
+                format!("{}-{km}", km - step_size).cell(),
+                total.cell().justify(Justify::Center),
+                open.cell().justify(Justify::Center),
+            ]
+        })
+        .collect::<Vec<_>>()
+        .table()
+        .title(vec![
+            "Km".cell().bold(true),
+            "No of places".cell().bold(true),
+            "Open now".cell().bold(true),
+        ])
+        .bold(true);
+
+    if let Err(_) = print_stdout(table) {
+        println!("KM      No of places       Open now");
+        zipped.iter().for_each(|((km, total), (_, open))| {
             println!(
                 "{}-{km}          {total}               {open}",
                 km - step_size
             );
         })
+    }
 }
 
 // given a num and step size, find the closest multiple of step to which it belongs to
