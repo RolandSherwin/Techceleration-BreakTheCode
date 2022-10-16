@@ -40,9 +40,9 @@ async fn main() {
         })
     });
     println!("Use <Space> to select an option and <Enter> to confirm the options");
-    let filtered_authors = filtered_from_cli(authors.into_iter().collect());
-    let filtered_langs = filtered_from_cli(languages.into_iter().collect());
-    let filtered_categories = filtered_from_cli(categories.into_iter().collect());
+    let filtered_authors = filtered_from_cli(authors.into_iter().collect(), "Authors");
+    let filtered_langs = filtered_from_cli(languages.into_iter().collect(), "Languages");
+    let filtered_categories = filtered_from_cli(categories.into_iter().collect(), "Categories");
     let news = news
         .into_iter()
         .filter_map(|new| {
@@ -68,7 +68,7 @@ async fn main() {
         .title(vec!["News".cell().bold(true)])
         .bold(true);
 
-    if let Ok(_) = print_stdout(table) {
+    if let Err(_) = print_stdout(table) {
         println!("Here are the news for you!");
         news.into_iter().for_each(|new| println!("- {new}\n"));
     }
@@ -82,8 +82,9 @@ async fn fetch_news() -> CurrentsResponse {
     resp.json::<CurrentsResponse>().await.unwrap()
 }
 
-fn filtered_from_cli(list: Vec<String>) -> BTreeSet<String> {
+fn filtered_from_cli(list: Vec<String>, prompt: &str) -> BTreeSet<String> {
     let keep_indices = MultiSelect::with_theme(&ColorfulTheme::default())
+        .with_prompt(prompt)
         .items(&list)
         .defaults(&[true])
         .interact()
