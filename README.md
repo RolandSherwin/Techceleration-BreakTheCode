@@ -17,12 +17,17 @@ Each solution is a binary, use `cargo run --release --bin <binary_name>` to run 
         Distance in KM to categorize the results [default: 2]
 ```
 
+#### 2. All possible valid Words (`words`)
+`cargo run --release --bin words -- --word eerf`
+```
+-w, --word <WORD>  Enter the word [default: eerf]
+```
+
 #### 3. GitHub Contributors Statistics (`contributors`)
 `cargo run --release --bin contributors -- --pages 2`
 ```
 -p, --pages <MAX_PAGES>  Number of pages to go through [default: 1]
 ```
-- Uses `tokio::spawn` for each page to fetch them concurrently
 
 #### 4. Filtered News List (`news`)
 1. Export your CurrentsAPI.service API key as `export CURRENTS_API_KEY=<your_key_here>`

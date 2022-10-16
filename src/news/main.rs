@@ -18,7 +18,7 @@ struct News {
     category: Vec<String>,
 }
 
-#[tokio::main]
+#[tokio::main(flavor = "current_thread")]
 async fn main() {
     let mut authors = BTreeSet::new();
     let mut languages = BTreeSet::new();

@@ -25,7 +25,7 @@ struct Organization {}
 #[derive(Debug, Serialize, Deserialize)]
 struct PullRequests {}
 
-#[tokio::main]
+#[tokio::main(flavor = "current_thread")]
 async fn main() {
     let args = Command::new("poi")
         .arg(

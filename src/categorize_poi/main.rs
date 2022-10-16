@@ -6,7 +6,7 @@ use api::NearbyPlaces;
 use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
 use geoutils::Location;
 
-#[tokio::main]
+#[tokio::main(flavor = "current_thread")]
 async fn main() {
     let args = Command::new("poi")
         .arg(

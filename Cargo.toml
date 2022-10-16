@@ -15,6 +15,10 @@ path = "src/contributors/main.rs"
 name = "news"
 path = "src/news/main.rs"
 
+[[bin]]
+name = "words"
+path = "src/words/main.rs"
+
 [dependencies]
 clap = {version = "~4.0.13", features = ["derive"]}
 serde = {version = "~1.0.145", features = ["derive"]}
@@ -25,3 +29,4 @@ geoutils = "0.5.1"
 eyre = "~0.6.8"
 cli-table = "~0.4.7"
 dialoguer = "~0.10.2"
+itertools = "~0.10.5"
