@@ -2,7 +2,8 @@
 Each solution is a binary, use `cargo run --release --bin <binary_name>` to run a single soltion with default args
 
 #### 1. Categorize Places of Interest (`poi`)
-`cargo run --release --bin poi -- --lat 13.08 --lng 80.27 --radius 20000 --search petrol --category 5`
+1. Export your Google Maps API key as `export GOOGLE_DEV_API_KEY=<your_key_here>`
+2. `cargo run --release --bin poi -- --lat 13.08 --lng 80.27 --radius 20000 --search petrol --category 5`
 ```
     --lat <LATITUDE>
         Latitude of the location [default: 13.0827]
@@ -22,3 +23,8 @@ Each solution is a binary, use `cargo run --release --bin <binary_name>` to run 
 -p, --pages <MAX_PAGES>  Number of pages to go through [default: 1]
 ```
 - Uses `tokio::spawn` for each page to fetch them concurrently
+
+#### 4. Filtered News List (`news`)
+1. Export your CurrentsAPI.service API key as `export CURRENTS_API_KEY=<your_key_here>`
+2. `cargo run --release --bin news`
+3. Selecting an option using `<Space>` will include news from that filter. Use `<Enter>` to goto the next category.
